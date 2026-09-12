@@ -58,9 +58,22 @@ document.addEventListener("DOMContentLoaded", () => {
       document.createElement("div");
 
     overlay.id = "academyOverlay";
-    overlay.className =
-      "academy-overlay visible";
+overlay.className =
+  "academy-overlay visible";
 
+overlay.style.cssText =
+  "position:fixed;" +
+  "inset:0;" +
+  "z-index:99999;" +
+  "display:flex;" +
+  "align-items:flex-start;" +
+  "justify-content:center;" +
+  "padding:20px 14px;" +
+  "background:rgba(15,23,42,.78);" +
+  "opacity:1;" +
+  "visibility:visible;" +
+  "pointer-events:auto;" +
+  "overflow-y:auto;";
     overlay.innerHTML = `
 
       <div
