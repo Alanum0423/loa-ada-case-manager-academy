@@ -1,1 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f172a">
 
+  <title>LOA & ADA Case Manager Academy</title>
+
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <div id="app">
+
+    <header class="app-header">
+      <div>
+        <span class="eyebrow">CASE MANAGER ACADEMY</span>
+        <h1>LOA & ADA</h1>
+      </div>
+
+      <div class="status">
+        <span class="status-dot"></span>
+        TRAINING
+      </div>
+    </header>
+
+    <main>
+
+      <section class="hero">
+        <p class="eyebrow">WELCOME</p>
+
+        <h2>
+          Become the case manager.
+        </h2>
+
+        <p>
+          An immersive training environment for Leave of Absence,
+          FMLA, ADA, and PWFA case management.
+        </p>
+
+        <button id="startButton">
+          Begin Training
+        </button>
+      </section>
+
+
+      <section class="progress-section">
+
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">YOUR PROGRESS</span>
+            <h3>Training Academy</h3>
+          </div>
+
+          <strong id="progressPercent">0%</strong>
+        </div>
+
+        <div class="progress-bar">
+          <div id="progressFill"></div>
+        </div>
+
+      </section>
+
+
+      <section class="module-grid">
+
+        <article class="module-card active">
+
+          <div class="module-number">
+            01
+          </div>
+
+          <div>
+            <span class="module-status">
+              AVAILABLE
+            </span>
+
+            <h3>
+              FMLA Foundations
+            </h3>
+
+            <p>
+              Statutory foundations, eligibility,
+              entitlement, calendar methodology,
+              and complex leave calculations.
+            </p>
+          </div>
+
+          <button class="module-button">
+            Open Module
+          </button>
+
+        </article>
+
+
+        <article class="module-card locked">
+
+          <div class="module-number">
+            02
+          </div>
+
+          <div>
+            <span class="module-status">
+              LOCKED
+            </span>
+
+            <h3>
+              System Navigation
+            </h3>
+
+            <p>
+              Case intake, system workflows,
+              documentation, and operational processing.
+            </p>
+          </div>
+
+        </article>
+
+
+        <article class="module-card locked">
+
+          <div class="module-number">
+            03
+          </div>
+
+          <div>
+            <span class="module-status">
+              LOCKED
+            </span>
+
+            <h3>
+              State & PFML
+            </h3>
+
+            <p>
+              State programs, PFML systems,
+              overlapping protections, and the Leave Triangle.
+            </p>
+          </div>
+
+        </article>
+
+
+        <article class="module-card locked">
+
+          <div class="module-number">
+            04
+          </div>
+
+          <div>
+            <span class="module-status">
+              LOCKED
+            </span>
+
+            <h3>
+              ADA & PWFA
+            </h3>
+
+            <p>
+              Interactive process, medical sufficiency,
+              accommodations, and logistics.
+            </p>
+          </div>
+
+        </article>
+
+
+        <article class="module-card locked">
+
+          <div class="module-number">
+            05
+          </div>
+
+          <div>
+            <span class="module-status">
+              LOCKED
+            </span>
+
+            <h3>
+              Production Simulation
+            </h3>
+
+            <p>
+              Case notes, SLAs, communication,
+              escalation, and full case execution.
+            </p>
+          </div>
+
+        </article>
+
+      </section>
+
+    </main>
+
+
+    <nav class="bottom-nav">
+
+      <button class="nav-item active">
+        <span>⌂</span>
+        <small>Home</small>
+      </button>
+
+      <button class="nav-item">
+        <span>▣</span>
+        <small>Cases</small>
+      </button>
+
+      <button class="nav-item">
+        <span>⚙</span>
+        <small>Tools</small>
+      </button>
+
+      <button class="nav-item">
+        <span>◆</span>
+        <small>Progress</small>
+      </button>
+
+    </nav>
+
+  </div>
+
+
+  <script src="app.js"></script>
+
+</body>
+</html>
