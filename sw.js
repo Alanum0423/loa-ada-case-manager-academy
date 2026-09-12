@@ -1,4 +1,4 @@
-const CACHE_NAME = "loa-academy-v1";
+const CACHE_NAME = "loa-academy-v2";
 
 const APP_FILES = [
   "./",
