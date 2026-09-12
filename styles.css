@@ -254,6 +254,8 @@ main {
   border: 1px solid var(--line);
   border-radius: 16px;
 
+  
+
   padding: 18px;
 
   box-shadow: var(--shadow);
@@ -453,4 +455,615 @@ input:focus-visible {
     grid-column: 1 / -1;
   }
 
+}
+/* ============================================
+   INTERACTIVE TRAINING OVERLAY
+============================================ */
+
+.academy-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding:
+    calc(env(safe-area-inset-top) + 16px)
+    14px
+    calc(env(safe-area-inset-bottom) + 16px);
+
+  background: rgba(15, 23, 42, 0.72);
+
+  overflow-y: auto;
+
+  opacity: 0;
+  visibility: hidden;
+
+  transition:
+    opacity 0.18s ease,
+    visibility 0.18s ease;
+}
+
+.academy-overlay.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.academy-modal {
+  width: 100%;
+  max-width: 680px;
+
+  margin-top: 10px;
+
+  background: #ffffff;
+
+  border-radius: 22px;
+
+  padding: 22px;
+
+  box-shadow:
+    0 25px 70px rgba(15, 23, 42, 0.3);
+
+  transform: translateY(12px);
+
+  transition:
+    transform 0.18s ease;
+}
+
+.academy-overlay.visible .academy-modal {
+  transform: translateY(0);
+}
+
+
+/* Overlay Header */
+
+.overlay-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  margin-bottom: 20px;
+}
+
+.overlay-header h2 {
+  margin: 5px 0 0;
+
+  font-size: 27px;
+  letter-spacing: -0.8px;
+}
+
+.icon-button {
+  width: 40px;
+  height: 40px;
+
+  flex: 0 0 auto;
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  background: var(--surface-alt);
+
+  color: var(--navy);
+
+  font-size: 26px;
+  line-height: 1;
+}
+
+
+/* Module Introduction */
+
+.module-intro-card {
+  padding: 20px;
+
+  background: var(--blue-light);
+
+  border: 1px solid #dbeafe;
+  border-radius: 16px;
+
+  margin-bottom: 14px;
+}
+
+.module-intro-card h3 {
+  margin: 7px 0;
+
+  font-size: 22px;
+}
+
+.module-intro-card p {
+  margin: 0;
+
+  color: var(--slate);
+
+  line-height: 1.6;
+}
+
+.module-tag {
+  display: inline-block;
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1px;
+
+  color: var(--blue);
+}
+
+
+/* Mission Card */
+
+.mission-card {
+  padding: 20px;
+
+  border: 1px solid var(--line);
+  border-radius: 16px;
+
+  margin-bottom: 14px;
+}
+
+.mission-number {
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.2px;
+
+  color: var(--blue);
+}
+
+.mission-card h4 {
+  margin: 7px 0;
+
+  font-size: 20px;
+}
+
+.mission-card p {
+  margin: 0;
+
+  color: var(--slate);
+
+  line-height: 1.55;
+}
+
+
+/* Action Buttons */
+
+.primary-action,
+.secondary-action {
+  width: 100%;
+
+  min-height: 50px;
+
+  border: none;
+  border-radius: 12px;
+
+  font-weight: 800;
+
+  transition:
+    transform 0.12s ease,
+    background 0.12s ease;
+}
+
+.primary-action {
+  background: var(--blue);
+  color: white;
+
+  box-shadow:
+    0 7px 18px rgba(37, 99, 235, 0.22);
+}
+
+.secondary-action {
+  margin-top: 14px;
+
+  background: var(--blue-light);
+  color: var(--blue);
+}
+
+.primary-action:active,
+.secondary-action:active {
+  transform: scale(0.98);
+}
+
+
+/* Case Profile */
+
+.case-profile {
+  padding: 18px;
+
+  background: var(--surface-alt);
+
+  border: 1px solid var(--line);
+  border-radius: 16px;
+
+  margin-bottom: 14px;
+}
+
+.case-profile h3 {
+  margin: 5px 0 18px;
+
+  font-size: 23px;
+}
+
+.case-details {
+  display: grid;
+  gap: 10px;
+}
+
+.case-details div {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+
+  padding-top: 10px;
+
+  border-top: 1px solid var(--line);
+}
+
+.case-details span {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.case-details strong {
+  text-align: right;
+  font-size: 12px;
+}
+
+
+/* Case Status */
+
+.case-status {
+  padding: 7px 9px;
+
+  border-radius: 999px;
+
+  background: var(--amber-light);
+  color: var(--amber);
+
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+
+  white-space: nowrap;
+}
+
+
+/* Investigation */
+
+.investigation-panel {
+  padding: 20px;
+
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.investigation-panel h3 {
+  margin: 7px 0 18px;
+
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+
+/* Decision Options */
+
+.decision-list {
+  display: grid;
+  gap: 9px;
+}
+
+.decision-option {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 14px;
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  background: white;
+
+  color: var(--navy);
+
+  text-align: left;
+
+  font-weight: 650;
+}
+
+.decision-option span {
+  width: 30px;
+  height: 30px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex: 0 0 auto;
+
+  border-radius: 8px;
+
+  background: var(--surface-alt);
+
+  font-weight: 900;
+}
+
+.decision-option.selected {
+  border-color: #93c5fd;
+  background: var(--blue-light);
+}
+
+
+/* Feedback */
+
+.decision-feedback {
+  margin-top: 14px;
+
+  padding: 15px;
+
+  border-radius: 12px;
+
+  display: none;
+
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.decision-feedback:not(:empty) {
+  display: block;
+}
+
+.decision-feedback p {
+  margin: 8px 0 0;
+}
+
+.decision-feedback.correct {
+  background: var(--green-light);
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+
+.decision-feedback.incorrect {
+  background: var(--red-light);
+  border: 1px solid #fecaca;
+  color: #991b1b;
+}
+
+
+/* Payroll */
+
+.payroll-grid {
+  display: grid;
+  gap: 0;
+
+  border: 1px solid var(--line);
+  border-radius: 12px;
+
+  overflow: hidden;
+}
+
+.payroll-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+
+  padding: 13px;
+
+  border-bottom: 1px solid var(--line);
+
+  font-size: 12px;
+}
+
+.payroll-row:last-child {
+  border-bottom: none;
+}
+
+.payroll-row span {
+  color: var(--slate);
+}
+
+.payroll-row strong {
+  white-space: nowrap;
+}
+
+
+/* Inputs */
+
+.calculation-question {
+  margin-top: 18px;
+}
+
+.calculation-question label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.calculation-input {
+  display: flex;
+  gap: 8px;
+}
+
+.calculation-input input {
+  min-width: 0;
+  flex: 1;
+
+  border: 1px solid var(--line);
+  border-radius: 10px;
+
+  padding: 13px;
+
+  color: var(--navy);
+  background: white;
+}
+
+.calculation-input button {
+  padding: 0 17px;
+
+  border: none;
+  border-radius: 10px;
+
+  background: var(--navy);
+  color: white;
+
+  font-weight: 800;
+}
+
+
+/* Math */
+
+.math-card {
+  padding: 22px;
+
+  background: var(--navy);
+  color: white;
+
+  border-radius: 16px;
+
+  margin-bottom: 14px;
+}
+
+.math-card .eyebrow {
+  color: #94a3b8;
+}
+
+.big-number {
+  margin-top: 6px;
+
+  font-size: 56px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.math-card p {
+  margin: 7px 0 0;
+
+  color: #cbd5e1;
+}
+
+.formula {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  padding: 20px;
+
+  margin-bottom: 16px;
+
+  background: var(--surface-alt);
+
+  border-radius: 12px;
+
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.formula strong {
+  color: var(--blue);
+  font-size: 24px;
+}
+
+
+/* Completion */
+
+.completion-screen {
+  text-align: center;
+
+  padding: 30px 10px 10px;
+}
+
+.completion-icon {
+  width: 70px;
+  height: 70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0 auto 18px;
+
+  border-radius: 50%;
+
+  background: var(--green-light);
+  color: var(--green);
+
+  font-size: 34px;
+  font-weight: 900;
+}
+
+.completion-screen h2 {
+  margin: 6px 0;
+
+  font-size: 30px;
+}
+
+.completion-screen > p {
+  color: var(--slate);
+  line-height: 1.55;
+}
+
+.completion-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 8px;
+
+  margin: 22px 0;
+}
+
+.completion-stats div {
+  padding: 14px 8px;
+
+  background: var(--surface-alt);
+
+  border-radius: 12px;
+}
+
+.completion-stats strong,
+.completion-stats span {
+  display: block;
+}
+
+.completion-stats strong {
+  font-size: 20px;
+}
+
+.completion-stats span {
+  margin-top: 4px;
+
+  color: var(--muted);
+
+  font-size: 9px;
+}
+
+
+/* Simple Views */
+
+.empty-state-card {
+  padding: 24px;
+
+  background: var(--surface-alt);
+
+  border: 1px solid var(--line);
+  border-radius: 16px;
+}
+
+.empty-state-card h3 {
+  margin-top: 0;
+
+  font-size: 22px;
+}
+
+.empty-state-card p {
+  color: var(--slate);
+  line-height: 1.6;
 }
