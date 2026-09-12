@@ -1,8 +1,22 @@
 document.addEventListener("DOMContentLoaded", () => {
 
+  // ==========================================
+  // ACADEMY STATE
+  // ==========================================
+
   const state = {
-    progress: 0
+    progress: 0,
+    currentModuleId: "module-01",
+    currentCaseId: "FMLA-001",
+    currentQuestionIndex: 0,
+    completedCases: [],
+    completedLessons: []
   };
+
+
+  // ==========================================
+  // DOM HELPERS
+  // ==========================================
 
   const $ = (selector, root = document) =>
     root.querySelector(selector);
@@ -11,9 +25,38 @@ document.addEventListener("DOMContentLoaded", () => {
     [...root.querySelectorAll(selector)];
 
 
-  // ================================
+  // ==========================================
+  // DATA HELPERS
+  // ==========================================
+
+  function getModule(moduleId) {
+    return ACADEMY_MODULES.find(
+      module => module.id === moduleId
+    );
+  }
+
+  function getCase(caseId) {
+    return ACADEMY_CASES.find(
+      item => item.id === caseId
+    );
+  }
+
+  function getQuestion(questionId) {
+    return ACADEMY_QUESTIONS.find(
+      question => question.id === questionId
+    );
+  }
+
+  function getLesson(lessonId) {
+    return ACADEMY_LESSONS.find(
+      lesson => lesson.id === lessonId
+    );
+  }
+
+
+  // ==========================================
   // PROGRESS
-  // ================================
+  // ==========================================
 
   function setProgress(value) {
 
@@ -26,18 +69,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const label = $("#progressPercent");
 
     if (fill) {
-      fill.style.width = `${state.progress}%`;
+      fill.style.width =
+        `${state.progress}%`;
     }
 
     if (label) {
-      label.textContent = `${state.progress}%`;
+      label.textContent =
+        `${state.progress}%`;
     }
   }
 
 
-  // ================================
+  // ==========================================
   // OVERLAY
-  // ================================
+  // ==========================================
 
   function closeOverlay() {
 
@@ -50,30 +95,36 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
 
-  function createOverlay(title, eyebrow) {
+  function createOverlay(
+    title,
+    eyebrow = "ACADEMY"
+  ) {
 
     closeOverlay();
 
     const overlay =
       document.createElement("div");
 
-    overlay.id = "academyOverlay";
-overlay.className =
-  "academy-overlay visible";
+    overlay.id =
+      "academyOverlay";
 
-overlay.style.cssText =
-  "position:fixed;" +
-  "inset:0;" +
-  "z-index:99999;" +
-  "display:flex;" +
-  "align-items:flex-start;" +
-  "justify-content:center;" +
-  "padding:20px 14px;" +
-  "background:rgba(15,23,42,.78);" +
-  "opacity:1;" +
-  "visibility:visible;" +
-  "pointer-events:auto;" +
-  "overflow-y:auto;";
+    overlay.className =
+      "academy-overlay visible";
+
+    overlay.style.cssText =
+      "position:fixed;" +
+      "inset:0;" +
+      "z-index:99999;" +
+      "display:flex;" +
+      "align-items:flex-start;" +
+      "justify-content:center;" +
+      "padding:20px 14px;" +
+      "background:rgba(15,23,42,.78);" +
+      "opacity:1;" +
+      "visibility:visible;" +
+      "pointer-events:auto;" +
+      "overflow-y:auto;";
+
     overlay.innerHTML = `
 
       <div
@@ -115,11 +166,15 @@ overlay.style.cssText =
 
     document.body.appendChild(overlay);
 
-    $("#closeAcademyOverlay", overlay)
-      .addEventListener(
+    const closeButton =
+      $("#closeAcademyOverlay", overlay);
+
+    if (closeButton) {
+      closeButton.addEventListener(
         "click",
         closeOverlay
       );
+    }
 
     overlay.addEventListener(
       "click",
@@ -136,72 +191,77 @@ overlay.style.cssText =
   }
 
 
-  // ================================
-  // MODULE 1
-  // ================================
+  // ==========================================
+  // MODULE 01
+  // ==========================================
 
   function launchModuleOne() {
+
+    const module =
+      getModule("module-01");
+
+    if (!module) {
+      return;
+    }
 
     setProgress(10);
 
     const overlay =
       createOverlay(
-        "FMLA Foundations",
+        module.shortTitle,
         "MODULE 01"
       );
 
-    $("#academyOverlayBody", overlay)
-      .innerHTML = `
+    const body =
+      $("#academyOverlayBody", overlay);
 
-        <div class="module-intro-card">
+    body.innerHTML = `
 
-          <span class="module-tag">
-            CASE MANAGER TRAINING
-          </span>
+      <div class="module-intro-card">
 
-          <h3>
-            Your first case is waiting.
-          </h3>
+        <span class="module-tag">
+          CASE MANAGER TRAINING
+        </span>
 
-          <p>
-            Investigate eligibility,
-            hours of service,
-            workweek mathematics,
-            and entitlement logic.
-          </p>
+        <h3>
+          ${module.title}
+        </h3>
 
+        <p>
+          ${module.description}
+        </p>
+
+      </div>
+
+
+      <div class="mission-card">
+
+        <div class="mission-number">
+          MISSION 01
         </div>
 
+        <h4>
+          Determine Eligibility
+        </h4>
 
-        <div class="mission-card">
+        <p>
+          Establish eligibility before
+          calculating available FMLA
+          entitlement.
+        </p>
 
-          <div class="mission-number">
-            MISSION 01
-          </div>
-
-          <h4>
-            Determine Eligibility
-          </h4>
-
-          <p>
-            Establish eligibility before
-            calculating available FMLA
-            entitlement.
-          </p>
-
-        </div>
+      </div>
 
 
-        <button
-          id="beginMission"
-          class="primary-action"
-          type="button"
-        >
-          Begin Mission →
-        </button>
+      <button
+        id="beginMission"
+        class="primary-action"
+        type="button"
+      >
+        Begin Mission →
+      </button>
 
-      `;
-
+    `;
 
     $("#beginMission", overlay)
       .addEventListener(
@@ -211,9 +271,9 @@ overlay.style.cssText =
   }
 
 
-  // ================================
-  // MISSION 1
-  // ================================
+  // ==========================================
+  // FMLA-001 CASE
+  // ==========================================
 
   function showMission() {
 
@@ -224,10 +284,23 @@ overlay.style.cssText =
       return;
     }
 
+    const caseData =
+      getCase("FMLA-001");
+
+    if (!caseData) {
+      return;
+    }
+
+    state.currentCaseId =
+      caseData.id;
+
+    state.currentQuestionIndex = 0;
+
     setProgress(15);
 
     $(".overlay-header h2", overlay)
-      .textContent = "FMLA-001";
+      .textContent =
+      caseData.id;
 
     $("#academyOverlayBody", overlay)
       .innerHTML = `
@@ -239,12 +312,13 @@ overlay.style.cssText =
           </span>
 
           <h3>
-            Jordan Miller
+            ${caseData.employee.name}
           </h3>
 
           <div class="case-details">
 
             <div>
+
               <span>
                 Leave Start
               </span>
@@ -252,888 +326,13 @@ overlay.style.cssText =
               <strong>
                 September 21, 2026
               </strong>
+
             </div>
 
             <div>
+
               <span>
                 Normal Schedule
               </span>
 
-              <strong>
-                32 hours/week
-              </strong>
-            </div>
-
-            <div>
-              <span>
-                Service
-              </span>
-
-              <strong>
-                2 years
-              </strong>
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <div class="investigation-panel">
-
-          <span class="eyebrow">
-            FIRST DECISION
-          </span>
-
-          <h3>
-            What should you establish
-            before calculating FMLA
-            entitlement?
-          </h3>
-
-
-          <div class="decision-list">
-
-            <button
-              class="decision-option"
-              data-answer="wrong"
-              type="button"
-            >
-              <span>A</span>
-              Remaining FMLA entitlement
-            </button>
-
-
-            <button
-              class="decision-option"
-              data-answer="correct"
-              type="button"
-            >
-              <span>B</span>
-              FMLA eligibility requirements
-            </button>
-
-
-            <button
-              class="decision-option"
-              data-answer="wrong"
-              type="button"
-            >
-              <span>C</span>
-              Whether the employee used PTO
-            </button>
-
-
-            <button
-              class="decision-option"
-              data-answer="wrong"
-              type="button"
-            >
-              <span>D</span>
-              Whether the employee prefers
-              intermittent leave
-            </button>
-
-          </div>
-
-
-          <div
-            id="decisionFeedback"
-            class="decision-feedback"
-            aria-live="polite"
-          ></div>
-
-        </div>
-
-      `;
-
-
-    $$(".decision-option", overlay)
-      .forEach(option => {
-
-        option.addEventListener(
-          "click",
-          () => {
-
-            $$(".decision-option", overlay)
-              .forEach(button => {
-
-                button.classList.remove(
-                  "selected"
-                );
-
-              });
-
-
-            option.classList.add(
-              "selected"
-            );
-
-
-            const feedback =
-              $("#decisionFeedback", overlay);
-
-
-            if (
-              option.dataset.answer ===
-              "correct"
-            ) {
-
-              setProgress(20);
-
-              feedback.className =
-                "decision-feedback correct";
-
-              feedback.innerHTML = `
-
-                <strong>
-                  ✓ Correct.
-                </strong>
-
-                <p>
-                  Eligibility comes before
-                  entitlement. First establish
-                  whether the employee meets
-                  the applicable FMLA
-                  eligibility requirements.
-                </p>
-
-                <button
-                  id="continueEligibility"
-                  class="primary-action"
-                  type="button"
-                >
-                  Continue →
-                </button>
-
-              `;
-
-
-              $(
-                "#continueEligibility",
-                overlay
-              ).addEventListener(
-                "click",
-                showEligibility
-              );
-
-            } else {
-
-              feedback.className =
-                "decision-feedback incorrect";
-
-              feedback.innerHTML = `
-
-                <strong>
-                  Not yet.
-                </strong>
-
-                <p>
-                  Do not calculate entitlement
-                  until you establish that FMLA
-                  applies to the employee.
-                </p>
-
-              `;
-
-            }
-
-          }
-        );
-
-      });
-
-  }
-
-
-  // ================================
-  // ELIGIBILITY
-  // ================================
-
-  function showEligibility() {
-
-    const overlay =
-      $("#academyOverlay");
-
-    if (!overlay) {
-      return;
-    }
-
-    setProgress(25);
-
-    $(".overlay-header h2", overlay)
-      .textContent =
-      "Eligibility Investigation";
-
-
-    $("#academyOverlayBody", overlay)
-      .innerHTML = `
-
-        <div class="investigation-panel">
-
-          <span class="eyebrow">
-            PAYROLL RECORD
-          </span>
-
-          <h3>
-            Which hours count toward
-            the 1,250-hour requirement?
-          </h3>
-
-
-          <div class="payroll-grid">
-
-            <div class="payroll-row">
-              <span>
-                Regular hours actually worked
-              </span>
-
-              <strong>
-                1,180
-              </strong>
-            </div>
-
-
-            <div class="payroll-row">
-              <span>
-                Overtime actually worked
-              </span>
-
-              <strong>
-                74
-              </strong>
-            </div>
-
-
-            <div class="payroll-row">
-              <span>
-                PTO
-              </span>
-
-              <strong>
-                80
-              </strong>
-            </div>
-
-
-            <div class="payroll-row">
-              <span>
-                Sick leave
-              </span>
-
-              <strong>
-                32
-              </strong>
-            </div>
-
-
-            <div class="payroll-row">
-              <span>
-                Holiday not worked
-              </span>
-
-              <strong>
-                16
-              </strong>
-            </div>
-
-          </div>
-
-
-          <label for="hoursAnswer">
-            Enter qualifying hours:
-          </label>
-
-
-          <div class="calculation-input">
-
-            <input
-              id="hoursAnswer"
-              type="number"
-              inputmode="numeric"
-              placeholder="Enter hours"
-            >
-
-            <button
-              id="submitHours"
-              type="button"
-            >
-              Submit
-            </button>
-
-          </div>
-
-
-          <div
-            id="hoursResult"
-            class="decision-feedback"
-            aria-live="polite"
-          ></div>
-
-        </div>
-
-      `;
-
-
-    $("#submitHours", overlay)
-      .addEventListener(
-        "click",
-        () => {
-
-          const answer =
-            Number(
-              $("#hoursAnswer", overlay).value
-            );
-
-          const result =
-            $("#hoursResult", overlay);
-
-
-          if (answer === 1254) {
-
-            setProgress(35);
-
-            result.className =
-              "decision-feedback correct";
-
-            result.innerHTML = `
-
-              <strong>
-                ✓ Correct: 1,254 qualifying hours.
-              </strong>
-
-              <p>
-                1,180 regular hours actually
-                worked + 74 overtime hours
-                actually worked = 1,254.
-              </p>
-
-              <p>
-                PTO, sick leave, and the
-                non-worked holiday are not
-                added to the federal
-                hours-worked total.
-              </p>
-
-              <button
-                id="continueMath"
-                class="primary-action"
-                type="button"
-              >
-                Continue to Workweek Math →
-              </button>
-
-            `;
-
-
-            $("#continueMath", overlay)
-              .addEventListener(
-                "click",
-                showMath
-              );
-
-          } else {
-
-            result.className =
-              "decision-feedback incorrect";
-
-            result.innerHTML = `
-
-              <strong>
-                ✕ Recalculate.
-              </strong>
-
-              <p>
-                Count hours actually worked.
-                Paid time that was not worked
-                does not become hours actually
-                worked.
-              </p>
-
-            `;
-
-          }
-
-        }
-      );
-
-  }
-
-
-  // ================================
-  // WORKWEEK MATH
-  // ================================
-
-  function showMath() {
-
-    const overlay =
-      $("#academyOverlay");
-
-    if (!overlay) {
-      return;
-    }
-
-    setProgress(45);
-
-    $(".overlay-header h2", overlay)
-      .textContent =
-      "Workweek Mathematics";
-
-
-    $("#academyOverlayBody", overlay)
-      .innerHTML = `
-
-        <div class="math-card">
-
-          <span class="eyebrow">
-            EMPLOYEE SCHEDULE
-          </span>
-
-          <div class="big-number">
-            32
-          </div>
-
-          <p>
-            hours per week
-          </p>
-
-        </div>
-
-
-        <div class="investigation-panel">
-
-          <span class="eyebrow">
-            INTERMITTENT LEAVE
-          </span>
-
-          <h3>
-            Jordan misses 4 hours.
-            How much of a workweek
-            is consumed?
-          </h3>
-
-
-          <div class="formula">
-
-            <span>
-              4
-            </span>
-
-            <span>
-              ÷
-            </span>
-
-            <span>
-              32
-            </span>
-
-            <span>
-              =
-            </span>
-
-            <strong>
-              ?
-            </strong>
-
-          </div>
-
-
-          <div class="calculation-input">
-
-            <input
-              id="fractionAnswer"
-              type="number"
-              inputmode="decimal"
-              step="0.001"
-              placeholder="0.000"
-            >
-
-            <button
-              id="submitFraction"
-              type="button"
-            >
-              Submit
-            </button>
-
-          </div>
-
-
-          <div
-            id="fractionResult"
-            class="decision-feedback"
-            aria-live="polite"
-          ></div>
-
-        </div>
-
-      `;
-
-
-    $("#submitFraction", overlay)
-      .addEventListener(
-        "click",
-        () => {
-
-          const answer =
-            Number(
-              $("#fractionAnswer", overlay).value
-            );
-
-          const result =
-            $("#fractionResult", overlay);
-
-
-          if (
-            Math.abs(
-              answer - 0.125
-            ) < 0.001
-          ) {
-
-            setProgress(100);
-
-            result.className =
-              "decision-feedback correct";
-
-            result.innerHTML = `
-
-              <strong>
-                ✓ Correct: 0.125 workweek.
-              </strong>
-
-              <p>
-                4 ÷ 32 = 0.125.
-              </p>
-
-              <p>
-                The same 4-hour absence would
-                equal 0.100 of a workweek for
-                an employee whose normal
-                schedule is 40 hours.
-              </p>
-
-              <button
-                id="completeMission"
-                class="primary-action"
-                type="button"
-              >
-                Complete Mission →
-              </button>
-
-            `;
-
-
-            $("#completeMission", overlay)
-              .addEventListener(
-                "click",
-                () => {
-
-                  $(
-                    "#academyOverlayBody",
-                    overlay
-                  ).innerHTML = `
-
-                    <div
-                      class="completion-screen"
-                    >
-
-                      <span class="eyebrow">
-                        MISSION COMPLETE
-                      </span>
-
-                      <h3>
-                        FMLA-001 cleared.
-                      </h3>
-
-                      <p>
-                        You established eligibility,
-                        calculated qualifying hours,
-                        and applied workweek-based
-                        leave mathematics.
-                      </p>
-
-                      <button
-                        id="returnHome"
-                        class="primary-action"
-                        type="button"
-                      >
-                        Return to Academy
-                      </button>
-
-                    </div>
-
-                  `;
-
-
-                  $("#returnHome", overlay)
-                    .addEventListener(
-                      "click",
-                      closeOverlay
-                    );
-
-                }
-              );
-
-          } else {
-
-            result.className =
-              "decision-feedback incorrect";
-
-            result.innerHTML = `
-
-              <strong>
-                ✕ Not quite.
-              </strong>
-
-              <p>
-                Divide the hours of leave
-                by the employee's normal
-                workweek: 4 ÷ 32.
-              </p>
-
-            `;
-
-          }
-
-        }
-      );
-
-  }
-
-
-  // ================================
-  // CASE LAB
-  // ================================
-
-  function openCases() {
-
-    const overlay =
-      createOverlay(
-        "Case Queue",
-        "CASE LAB"
-      );
-
-
-    $("#academyOverlayBody", overlay)
-      .innerHTML = `
-
-        <div class="mission-card">
-
-          <div class="mission-number">
-            AVAILABLE CASE
-          </div>
-
-          <h4>
-            FMLA-001 · Jordan Miller
-          </h4>
-
-          <p>
-            Eligibility, hours-of-service
-            investigation, and workweek
-            mathematics.
-          </p>
-
-          <button
-            id="openCase"
-            class="primary-action"
-            type="button"
-          >
-            Open Case →
-          </button>
-
-        </div>
-
-      `;
-
-
-    $("#openCase", overlay)
-      .addEventListener(
-        "click",
-        showMission
-      );
-
-  }
-
-
-  // ================================
-  // TOOLS
-  // ================================
-
-  function openTools() {
-
-    const overlay =
-      createOverlay(
-        "Training Tools",
-        "TOOLS"
-      );
-
-
-    $("#academyOverlayBody", overlay)
-      .innerHTML = `
-
-        <div class="module-intro-card">
-
-          <h3>
-            Case Manager Toolkit
-          </h3>
-
-          <p>
-            Eligibility, entitlement,
-            rolling-calendar,
-            intermittent-leave, and
-            workweek calculators will
-            live here.
-          </p>
-
-        </div>
-
-
-        <div class="empty-state-card">
-
-          <strong>
-            Tool library in build.
-          </strong>
-
-          <p>
-            This area is reserved for
-            the production calculator suite.
-          </p>
-
-        </div>
-
-      `;
-
-  }
-
-
-  // ================================
-  // PROGRESS
-  // ================================
-
-  function openProgress() {
-
-    const overlay =
-      createOverlay(
-        "Training Progress",
-        "ACADEMY"
-      );
-
-
-    $("#academyOverlayBody", overlay)
-      .innerHTML = `
-
-        <div class="math-card">
-
-          <span class="eyebrow">
-            CURRENT COMPLETION
-          </span>
-
-          <div class="big-number">
-            ${state.progress}%
-          </div>
-
-          <p>
-            Module 01 · FMLA Foundations
-          </p>
-
-        </div>
-
-      `;
-
-  }
-
-
-  // ================================
-  // START BUTTON
-  // ================================
-
-  const startButton =
-    $("#startButton");
-
-
-  if (startButton) {
-
-    startButton.addEventListener(
-      "click",
-      () => {
-
-        startButton.textContent =
-          "Continue Training";
-
-        setProgress(5);
-
-        launchModuleOne();
-
-      }
-    );
-
-  }
-
-
-  // ================================
-  // MODULE BUTTON
-  // ================================
-
-  $$(".module-button")
-    .forEach(button => {
-
-      button.addEventListener(
-        "click",
-        launchModuleOne
-      );
-
-    });
-
-
-  // ================================
-  // BOTTOM NAV
-  // ================================
-
-  $$(".nav-item")
-    .forEach((item, index) => {
-
-      item.addEventListener(
-        "click",
-        () => {
-
-          $$(".nav-item")
-            .forEach(nav => {
-
-              nav.classList.remove(
-                "active"
-              );
-
-            });
-
-
-          item.classList.add("active");
-
-
-          if (index === 0) {
-            closeOverlay();
-          }
-
-          if (index === 1) {
-            openCases();
-          }
-
-          if (index === 2) {
-            openTools();
-          }
-
-          if (index === 3) {
-            openProgress();
-          }
-
-        }
-      );
-
-    });
-
-
-  // ================================
-  // INITIALIZE
-  // ================================
-
-  setProgress(0);
-
-});
+              <
