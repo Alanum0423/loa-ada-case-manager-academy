@@ -1,11 +1,22 @@
-const CACHE_NAME = "loa-academy-v2";
+const CACHE_NAME = "loa-academy-v3";
 
 const APP_FILES = [
   "./",
   "./index.html",
   "./styles.css",
-  "./app.js",
-  "./manifest.json"
+  "./app.js?v=3",
+  "./manifest.json",
+
+  "./data/modules.js",
+  "./data/cases.js",
+  "./data/questions.js",
+  "./data/calculators.js",
+  "./data/lessons.js",
+  "./data/scenarios.js",
+  "./data/rubrics.js",
+  "./data/glossary.js",
+  "./data/references.js",
+  "./data/content-map.js"
 ];
 
 self.addEventListener("install", event => {
